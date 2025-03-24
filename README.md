@@ -19,3 +19,9 @@ Firstly, run `ARIMA.py` for pre-processing step by ARIMA model. Then, run the ne
 - Run `LSTM.py` for the single-layer LSTM, multi-layer LSTM, and bidirectional LSTM models.
 - Run `XGBoost.py` for the XGBoost model.
 - Run `Main.py` for our proposed Attention-based CNN-LSTM and XGBoost hybrid model.
+
+
+
+## Remark
+
+Calling `get_apple_data.py` requires a higher version of Python, so if you need to get Apple stock data yourself, you need to create a new Python environment and use the **latest version** of Python.
