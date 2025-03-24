@@ -31,7 +31,7 @@ n_epochs = 50
 # ====================================
 model_type = 3
 
-yuan_data = pd.read_csv('./601988.SH.csv')  
+yuan_data = pd.read_csv('./apple_stock_data.csv')
 yuan_data.index = pd.to_datetime(yuan_data['trade_date'], format='%Y%m%d') 
 yuan_data = yuan_data.loc[:, ['open', 'high', 'low', 'close', 'amount']]
 
@@ -136,7 +136,7 @@ finalpredicted_stock_price = finalpredicted_stock_price.drop(['trade_date'], axi
 
 plt.figure(figsize=(10, 6))
 # print('yuan_real', yuan_real_stock_price1)
-plt.plot(yuan_data.loc['2021-06-22':, 'close'], label='Stock Price')
+plt.plot(yuan_data.loc['2024-07-03':, 'close'], label='Stock Price')
 plt.plot(finalpredicted_stock_price['close'], label='Predicted Stock Price')
 plt.title('BiLSTM: Stock Price Prediction')
 plt.xlabel('Time', fontsize=12, verticalalignment='top')
@@ -153,5 +153,5 @@ plt.ylabel('Close', fontsize=14, horizontalalignment='center')
 plt.legend()
 plt.show()
 
-yhat = yuan_data.loc['2021-06-22':, 'close']
+yhat = yuan_data.loc['2024-07-03':, 'close']
 evaluation_metric(finalpredicted_stock_price['close'],yhat)

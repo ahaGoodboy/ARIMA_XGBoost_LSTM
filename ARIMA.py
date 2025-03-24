@@ -10,14 +10,14 @@ from utils import *
 #plt.rcParams['font.sans-serif'] = ['SimHei']    # for chinese text on plt
 #plt.rcParams['axes.unicode_minus'] = False      # for chinese text negative symbol '-' on plt
 
-data = pd.read_csv('./601988.SH.csv')
+data = pd.read_csv('./apple_stock_data.csv')
 test_set2 = data.loc[3501:, :] 
 data.index = pd.to_datetime(data['trade_date'], format='%Y%m%d') 
 data = data.drop(['ts_code', 'trade_date'], axis=1)
 data = pd.DataFrame(data, dtype=np.float64)
 
-training_set = data.loc['2007-01-04':'2021-06-21', :]  # 3501
-test_set = data.loc['2021-06-22':, :]  # 180
+training_set = data.loc['2010-08-04':'2024-07-02', :]  # 3501
+test_set = data.loc['2024-07-03':, :]  # 180
 
 plt.figure(figsize=(10, 6))
 plt.plot(training_set['close'], label='training_set')
@@ -75,7 +75,7 @@ print('&', training_data_diff)
 acf_pacf_plot(training_data_diff)
 
 # order=(p,d,q)
-model = sm.tsa.ARIMA(endog=training_set['close'], order=(2, 1, 0)).fit()
+model = sm.tsa.ARIMA(endog=training_set['close'], order=(3, 2, 0)).fit()
 #print(model.summary())
 
 history = [x for x in training_set['close']]
@@ -83,7 +83,7 @@ history = [x for x in training_set['close']]
 predictions = list()
 # print('test_set.shape', test_set.shape[0])
 for t in range(test_set.shape[0]):
-    model1 = sm.tsa.ARIMA(history, order=(2, 1, 0))
+    model1 = sm.tsa.ARIMA(history, order=(3, 2, 0))
     model_fit = model1.fit()
     yhat = model_fit.forecast()
     yhat = np.float(yhat[0])
@@ -112,7 +112,7 @@ plt.ylabel('Close', fontsize=14, horizontalalignment='center')
 plt.legend()
 plt.show()
 
-model2 = sm.tsa.ARIMA(endog=data['close'], order=(2, 1, 0)).fit()
+model2 = sm.tsa.ARIMA(endog=data['close'], order=(3, 2, 0)).fit()
 residuals = pd.DataFrame(model2.resid)
 fig, ax = plt.subplots(1, 2)
 residuals.plot(title="Residuals", ax=ax[0])

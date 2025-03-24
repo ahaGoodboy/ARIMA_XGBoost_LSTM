@@ -1,13 +1,14 @@
 from keras.layers import Input, Dense, LSTM, Conv1D, Dropout, Bidirectional, Multiply
 from keras.models import Model
 # from attention_utils import get_activations
-from keras.layers import merge
+from keras.layers import Concatenate
 from keras.layers.core import *
-from keras.layers.recurrent import LSTM
+#from keras.layers.recurrent import LSTM
 from keras.models import *
 from utils import *
 import numpy as np
 import xgboost as xgb
+from keras import backend as K
 
 def attention_3d_block_merge(inputs,single_attention_vector = False):
     # inputs.shape = (batch_size, time_steps, input_dim)
@@ -21,7 +22,7 @@ def attention_3d_block_merge(inputs,single_attention_vector = False):
         a = RepeatVector(input_dim)(a)
     a_probs = Permute((1, 2), name='attention_vec')(a)
 
-    output_attention_mul = merge([inputs, a_probs], name='attention_mul', mode='mul')
+    output_attention_mul = Concatenate([inputs, a_probs], name='attention_mul', mode='mul')
     return output_attention_mul
 
 def attention_3d_block(inputs, single_attention_vector=False):
