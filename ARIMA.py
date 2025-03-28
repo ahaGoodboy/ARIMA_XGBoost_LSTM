@@ -75,7 +75,7 @@ print('&', training_data_diff)
 acf_pacf_plot(training_data_diff)
 
 # order=(p,d,q)
-model = sm.tsa.ARIMA(endog=training_set['close'], order=(3, 2, 0)).fit()
+model = sm.tsa.ARIMA(endog=training_set['close'], order=(2, 1, 0)).fit()
 #print(model.summary())
 
 history = [x for x in training_set['close']]
@@ -83,7 +83,7 @@ history = [x for x in training_set['close']]
 predictions = list()
 # print('test_set.shape', test_set.shape[0])
 for t in range(test_set.shape[0]):
-    model1 = sm.tsa.ARIMA(history, order=(3, 2, 0))
+    model1 = sm.tsa.ARIMA(history, order=(2, 1, 0))
     model_fit = model1.fit()
     yhat = model_fit.forecast()
     yhat = np.float(yhat[0])
@@ -112,7 +112,7 @@ plt.ylabel('Close', fontsize=14, horizontalalignment='center')
 plt.legend()
 plt.show()
 
-model2 = sm.tsa.ARIMA(endog=data['close'], order=(3, 2, 0)).fit()
+model2 = sm.tsa.ARIMA(endog=data['close'], order=(2, 1, 0)).fit()
 residuals = pd.DataFrame(model2.resid)
 fig, ax = plt.subplots(1, 2)
 residuals.plot(title="Residuals", ax=ax[0])
